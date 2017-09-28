@@ -1,5 +1,6 @@
 import sys
 
-s = sys.stdin.read()
-s.replace(' .', '.\n')
-		
+
+for line in sys.stdin.readlines(): 
+	line = line.replace(' .', '.\n')
+	print(line)
