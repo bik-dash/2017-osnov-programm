@@ -9,6 +9,8 @@
 
 import sys
 
+import re
+
 s1 = sys.stdin.readlines()
 s =''.join(s1)
 s = s.lower()
@@ -25,6 +27,8 @@ sonor = {'л' : 'l', 'р' : 'r'}
 word_end = ['.', ' ', '!', ',', ':', ';', '?', '"', ')']
 
 paired_cons = ['н', 'д', 'т', 'з', 'с', 'ц', 'р', 'л']
+
+vowels = ['a', 'i', 'o', 'u', 'e', '\u025B']
 
 converted_line = ''
 	
@@ -108,10 +112,7 @@ for index, char in enumerate(s):
 				else:
 					transchar = 'e'
 	elif char == 'о':
-		if s[index+1] in word_end:
-			transchar = 'A'
-		else:
-			transchar = 'o'
+		transchar = 'o'
 	elif char == 'ю':
 		if len(s) > index+1:
 			if s[index-1] == ' ':
@@ -145,10 +146,26 @@ for index, char in enumerate(s):
 	else:
 		transchar = char
 	converted_line += transchar
-print(converted_line)
-
-	
 
 
+#The following part replaces "o" in non-first syllables with schwa
 
-	
+a = re.findall('[a-zA-Z]*[aueio][a-zA-Z]+o[a-zA-Z]*', converted_line)
+
+tokens = converted_line.split(' ')
+for token in tokens:
+	number_syllables = 0
+	tok_new = ''
+	for i in token:
+		if i in vowels:
+			number_syllables = number_syllables +1
+			if (i == 'o') & (number_syllables > 1):
+				i = '\u0259'
+				tok_new+=i
+			else:
+				tok_new+=i
+		else:
+			tok_new+=i
+	converted_line = converted_line.replace(token, tok_new)
+print (converted_line)
+			
