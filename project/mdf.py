@@ -152,26 +152,38 @@ for index, char in enumerate(s):
 
 #The following part replaces "o" and "e" in non-first syllables with schwa
 
-a = re.findall('[a-zA-Z]*[aueio][a-zA-Z]+o[a-zA-Z]*', converted_line)
-
 tokens = converted_line.split(' ')
 for token in tokens:
 	number_syllables = 0
 	tok_new = ''
 	for index, i in enumerate(token):
 		if i in vowels:
+			number_syllables = number_syllables +1
 			if len(token) > index+1:
-				number_syllables = number_syllables +1
-				if (i == 'o') & (number_syllables > 1):
-					i = '\u0259'
-					tok_new+=i
+				
+				if (i == 'o'):
+					if (number_syllables > 1):
+						i = '\u0259'
+						tok_new+=i
+					else:
+						tok_new+=i
 				elif (i == 'e') & (number_syllables > 1) & (token[index-2] in paired_cons_tr) & (token[index-1] == '\u2019'):
 					i = '\u0259'
 					tok_new+=i
 				else:
 					tok_new+=i
+			else: 
+				tok_new +=i
+		elif (i == 's') & (token[index-1] == 'n'):
+			i = 'c'
+			tok_new+=i
+		elif (i == '\u0161') & (token[index-1] == 'n'):
+			i = '\u010D'
+			tok_new+=i
 		else:
 			tok_new+=i
 	converted_line = converted_line.replace(token, tok_new)
-print (converted_line)
+print(converted_line)
 			
+#Affricatization of sibilants
+
