@@ -1,11 +1,8 @@
-# This is an attempt to make a transcriber for Moksha; 
-#not finished yet!
-#By now it creates a "preliminary" transcription 
-# where E = "to choose between epsilon and [e]" (in the beginning of a word it has to be taken from the dictionary)
-# A = "to choose between [a], epsilon and schwa" 
-#I am going to add one more cycle, which converts converted_line into 
-#a better transcription (including assimilation and schwa insertion in consonant clusters).
-
+# This is an attempt to create a program that takes Moksha texts written in cyrillic and transcribes them.
+#It is not an IPA transcription, but the system of transcription elaborated for the Moksha project
+#By now it does a preliminary transcription,
+# where E = "to choose between epsilon and [e]" (in the beginning of a word it has to be taken from the dictionary and cannot be predicted)
+# A = "to choose between [a], epsilon and schwa" (same problem)
 
 import sys
 
@@ -174,6 +171,7 @@ for token in tokens:
 					tok_new+=i
 			else: 
 				tok_new +=i
+#Affricatization of sibilants after n
 		elif (i == 's') & (token[index-1] == 'n'):
 			i = 'c'
 			tok_new+=i
@@ -185,5 +183,4 @@ for token in tokens:
 	converted_line = converted_line.replace(token, tok_new)
 print(converted_line)
 			
-#Affricatization of sibilants
 

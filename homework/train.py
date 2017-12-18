@@ -34,7 +34,7 @@ for f in freqlst:
 
 freq.sort(reverse=True)
 
-fd = open('train.txt', 'w+')
+fd = open('model.tsv', 'w+')
 fd.write('# P' + '\t' + 'count' + '\t' + 'tag' + '\t' + 'form' + '\n')
 
 for i in tags_freq:
